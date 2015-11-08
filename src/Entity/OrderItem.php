@@ -10,9 +10,9 @@ namespace Entity;
 
 class OrderItem extends AbstractEntity
 {
-    protected $orderId;
-    protected $isbn;
-    protected $quantity;
+    private $orderId;
+    private $isbn;
+    private $quantity;
 
     /**
      * OrderItem constructor.
@@ -22,7 +22,7 @@ class OrderItem extends AbstractEntity
      */
     public function __construct($orderId, $isbn, $quantity)
     {
-        $this->orderId=$orderId;
+        $this->orderId = $orderId;
         $this->isbn = $isbn;
         $this->quantity = $quantity;
     }

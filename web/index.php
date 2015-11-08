@@ -4,20 +4,50 @@ require __DIR__ . '/../config/autoload.php';
 
 use Layer\Collection\EntityCollection;
 use Entity\Customer;
+use Entity\Order;
+use Entity\OrderItem;
+use Entity\Book;
 
+function showObject($entity)
+{
+    $entityArr = (array)$entity;
+    foreach ($entityArr as $key=>$value ) {
+        if (!strpos($key, get_class($entity))) {
+            $key = str_replace('Entity\Abstract', '', $key);
+            if ($value) {
+                $value = $value->format('Y-m-d H:i');
+            };
+        } else {
+            $key = str_replace(get_class($entity), '', $key);
+            if (is_array($value)) {
+                $s = '';
+                foreach ($value as $v) {
+                    $s += $v . ' ';
+                }
+                $value = $s;
+            }
+        }
+        echo  $key . ': ' . $value . '<br>';
+    }
+}
 
-EntityCollection::addEntity(new Customer(1, 'Vasya', 'Street', 'Cherkasy', []));
+$col1 = new EntityCollection();
 
-print_r((array)EntityCollection::getEntity('Customer', 1));
+EntityCollection::addCustomer(new Customer(1, 'Vasya', 'Street', 'Cherkasy'));
+echo 'Customer--------------------------<br>';
+showObject(EntityCollection::getCustomer(1));
 
-echo '<br>';
+EntityCollection::addBook(new Book('5-8459-0046-8', 'Майкл Морган', 'Java 2. Керіництво користувача', 34.99));
+echo 'Book--------------------------<br>';
+showObject(EntityCollection::getBook('5-8459-0046-8'));
 
-EntityCollection::updateEntity(new Customer(1, 'Vova', 'Street1', 'Cherkasy', []));
+$order = EntityCollection::addOrder(new Order(null, 1));
+echo 'Order--------------------------<br>';
+showObject(EntityCollection::getOrder(1));
 
-print_r((array)EntityCollection::getEntity('Customer', 1));
+EntityCollection::addOrderItem(new OrderItem($order, '5-8459-0046-8', 10));
+echo 'OrderItem--------------------------<br>';
+showObject(EntityCollection::getOrderItem(1));
 
-echo '<br>';
-
-EntityCollection::deleteEntity('Customer', 1);
-
-print_r((array)EntityCollection::getEntity('Customer', 1));
+echo 'Order--------------------------<br>';
+showObject(EntityCollection::getOrder(1));

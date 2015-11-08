@@ -16,11 +16,11 @@ class Order extends AbstractEntity
     private $orderItems;
 
 
-    public function __construct($orderId, $customerId, $amount, $orderItems)
+    public function __construct($orderId, $customerId)
     {
         $this->orderId = $orderId;
         $this->customerId = $customerId;
-        $this->amount = $amount;
+        $this->amount = 0;
         $this->orderItems = [];
     }
 
@@ -78,4 +78,8 @@ class Order extends AbstractEntity
         $this->amount += $price;
     }
 
+    public function getOrderItems()
+    {
+        return $this->orderItems;
+    }
 }
