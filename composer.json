@@ -1,0 +1,22 @@
+{
+    "name": "PulsarV/hw5",
+    "description": "Geekhub AdvancedPHP 2015 HW#5",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Volodymyr Kravchuk",
+            "email": "pulsarv@rambler.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Entity\\": "src/Entity/",
+            "Layer\\": "src/Layer/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.5.0",
+        "ext-mysqlnd": "*"
+    }
+}
