@@ -168,6 +168,26 @@ class EntityCollection
         return self::$bookCollection[$isbn];
     }
 
+    public static function getAllCustomers()
+    {
+        return array_splice(self::$customerCollection, 1);
+    }
+
+    public static function getAllOrders()
+    {
+        return array_splice(self::$orderCollection, 1);
+    }
+
+    public static function getAllOrderItems()
+    {
+        return array_splice(self::$orderItemCollection, 1);
+    }
+
+    public static function getAllBooks()
+    {
+        return array_splice(self::$bookCollection, 1);
+    }
+
     public static function updateCustomer(Customer $customer)
     {
         if (!array_key_exists($customer->getCustomerId(), self::$customerCollection)) {

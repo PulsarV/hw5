@@ -8,6 +8,7 @@ use Entity\Customer;
 use Entity\Order;
 use Entity\OrderItem;
 use Entity\Book;
+use Layer\Manager\Manager;
 
 InitCollection::init($tables);
 
@@ -34,7 +35,7 @@ function showObject($entity)
     }
 }
 
-
+/*
 echo 'Customer--------------------------<br>';
 showObject(EntityCollection::getCustomer(1));
 
@@ -48,4 +49,8 @@ echo 'OrderItem--------------------------<br>';
 showObject(EntityCollection::getOrderItem(1, '5-8459-0046-8'));
 
 echo 'Order--------------------------<br>';
-showObject(EntityCollection::getOrder(1));
+showObject(EntityCollection::getOrder(1));*/
+
+$a = new Manager();
+$x = $a->findAll('Customer');
+echo $x[0]->getName();

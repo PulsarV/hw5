@@ -18,6 +18,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.5.0",
-        "ext-mysqlnd": "*"
+        "ext-mysqlnd": "*",
+        "twig/twig": "^1.22"
     }
 }

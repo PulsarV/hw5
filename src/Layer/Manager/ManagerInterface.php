@@ -43,12 +43,4 @@ interface ManagerInterface
      * @return array
      */
     public function findAll($entityName);
-
-    /**
-     * Search all entity data in the DB like $criteria rules
-     * @param $entityName
-     * @param array $criteria
-     * @return mixed
-     */
-    public function findBy($entityName, $criteria = []);
 }
