@@ -93,37 +93,29 @@ class EntityCollection
             return false;
         }
 
-
         if (!self::$orderCollection[$orderItem->getOrderId()]) {
             return false;
         }
 
-        $isError = true;
-        foreach (self::$bookCollection as $key=>$value) {
-            if ($key == $orderItem->getIsbn()) {
-                $isError = false;
-                break;
-            }
-        }
-        if ($isError) {
+        if (!array_key_exists($orderItem->getIsbn(), self::$bookCollection)) {
             return false;
         }
 
-        for ($i = 0; $i < self::$orderItemCollection[0]; $i++) {
-            if (self::$orderItemCollection[$i + 1]->getOrderId() == $orderItem->getOrderId()
-                and self::$orderItemCollection[$i + 1]->getIsbn() == $orderItem->getIsbn()) {
-                return self::updateOrder($orderItem);
-            }
+        if (array_key_exists($orderItem->getOrderId(), self::$orderCollection)
+            and array_key_exists($orderItem->getIsbn(), self::$bookCollection)
+            and self::$orderItemCollection[0]) {
+            return self::updateOrderItem($orderItem);
         }
 
         $orderItem->setCreatedAt(new DateTime());
+
         self::$orderItemCollection[0] += 1;
-        self::$orderItemCollection[self::$orderCollection[0]] = $orderItem;
+        self::$orderItemCollection[self::$orderItemCollection[0]] = $orderItem;
+
         self::$orderCollection[$orderItem->getOrderId()]->addOrderItem(self::$orderItemCollection[0],
             $orderItem->getQuantity() * self::$bookCollection[$orderItem->getIsbn()]->getPrice());
         self::$orderCollection[$orderItem->getOrderId()]->setUpdatedAt(new DateTime());
-
-        return $orderItem->getOrderId();
+        return self::$orderItemCollection[0];
     }
 
     public static function addBook(Book $book)
@@ -131,7 +123,7 @@ class EntityCollection
         $book->setCreatedAt(new DateTime());
 
         if (array_key_exists($book->getIsbn(), self::$bookCollection)) {
-                return false;
+            return false;
         }
 
         self::$bookCollection[$book->getIsbn()] = $book;
@@ -141,20 +133,28 @@ class EntityCollection
 
     public static function getCustomer($customerId)
     {
+        if (!array_key_exists($customerId, self::$customerCollection)) {
+            return false;
+        }
         return self::$customerCollection[$customerId];
     }
 
     public static function getOrder($orderId)
     {
+        if (!array_key_exists($orderId, self::$orderCollection)) {
+            return false;
+        }
         return self::$orderCollection[$orderId];
     }
 
     public static function getOrderItem($orderId, $isbn)
     {
-        for ($i = 0; $i < self::$orderItemCollection[0]; $i++) {
-            if (self::$orderItemCollection[$i + 1]->getOrderId() == $orderId and
-                self::$orderItemCollection[$i + 1]->getIsbn() == $isbn) {
-                return self::$orderItemCollection[$i + 1];
+        if (array_key_exists($orderId, self::$orderCollection)
+            and array_key_exists($isbn, self::$bookCollection)) {
+            for ($i = 0; $i< self::$orderItemCollection[0]; $i++) {
+                if (self::$orderItemCollection[$i + 1]->getOrderId() == $orderId) {
+                    return self::$orderItemCollection[$i + 1];
+                }
             }
         }
         return false;
@@ -162,6 +162,9 @@ class EntityCollection
 
     public static function getBook($isbn)
     {
+        if (!array_key_exists($isbn, self::$bookCollection)) {
+            return false;
+        }
         return self::$bookCollection[$isbn];
     }
 
@@ -175,6 +178,7 @@ class EntityCollection
         }
         $customer->setUpdatedAt(new DateTime());
         self::$customerCollection[$customer->getCustomerId()] = $customer;
+        return $customer->getCustomerId();
     }
 
     public static function updateOrder(Order $order)
@@ -184,17 +188,19 @@ class EntityCollection
         }
         $order->setUpdatedAt(new DateTime());
         self::$orderCollection[$order->getOrderId()] = $order;
+        return $order->getOrderId();
     }
 
     public static function updateOrderItem(OrderItem $orderItem)
     {
-        for ($i = 0; $i < self::$orderItemCollection[0]; $i++) {
-            if (self::$orderItemCollection[$i + 1]->getOrderId() == $orderItem->getOrderId()
-                and self::$orderItemCollection[$i + 1]->getIsbn() == $orderItem->getIsbn()) {
-
-                $orderItem->setUpdatedAt(new DateTime());
-                self::$orderItemCollection[$i + 1] = $orderItem;
-                return $orderItem->getOrderId();
+        if (array_key_exists($orderItem->getOrderId(), self::$orderCollection)
+            and array_key_exists($orderItem->getIsbn(), self::$bookCollection)) {
+            $orderItem->setUpdatedAt(new DateTime());
+            for ($i = 0; $i< self::$orderItemCollection[0]; $i++) {
+                if (self::$orderItemCollection[$i + 1]->getOrderId() == $orderItem->getOrderId()) {
+                    self::$orderItemCollection[$i + 1] = $orderItem;
+                    return self::$orderItemCollection[0];
+                }
             }
         }
         return false;
