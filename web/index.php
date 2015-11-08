@@ -41,13 +41,17 @@ EntityCollection::addBook(new Book('5-8459-0046-8', 'Майкл Морган', '
 echo 'Book--------------------------<br>';
 showObject(EntityCollection::getBook('5-8459-0046-8'));
 
+EntityCollection::updateBook(new Book('5-8459-0046-8', 'Майкл Морган', 'Java 2. Керіництво користувача', 38.99));
+echo 'Book--------------------------<br>';
+showObject(EntityCollection::getBook('5-8459-0046-8'));
+
 $order = EntityCollection::addOrder(new Order(null, 1));
 echo 'Order--------------------------<br>';
 showObject(EntityCollection::getOrder(1));
 
 EntityCollection::addOrderItem(new OrderItem($order, '5-8459-0046-8', 10));
 echo 'OrderItem--------------------------<br>';
-showObject(EntityCollection::getOrderItem(1));
+showObject(EntityCollection::getOrderItem(1, '5-8459-0046-8'));
 
 echo 'Order--------------------------<br>';
 showObject(EntityCollection::getOrder(1));
