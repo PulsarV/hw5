@@ -27,7 +27,7 @@ interface ManagerInterface
      * @param $entity
      * @return mixed
      */
-    public function remove($entity);
+    public function remove($entityName, $id);
 
     /**
      * Search entity data in the DB by Id

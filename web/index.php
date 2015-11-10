@@ -10,9 +10,12 @@ use Entity\OrderItem;
 use Entity\Book;
 use Layer\Manager\Manager;
 
-InitCollection::init($tables);
+//InitCollection::init($tables);
 
-function showObject($entity)
+$controller = new MainController();
+$controller->run();
+
+/*function showObject($entity)
 {
     $entityArr = (array)$entity;
     foreach ($entityArr as $key=>$value ) {
@@ -50,7 +53,7 @@ showObject(EntityCollection::getOrderItem(1, '5-8459-0046-8'));
 
 echo 'Order--------------------------<br>';
 showObject(EntityCollection::getOrder(1));*/
-
+/*
 $a = new Manager();
 $x = $a->findAll('Customer');
-echo $x[0]->getName();
+echo $x[0]->getName();*/

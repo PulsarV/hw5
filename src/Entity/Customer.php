@@ -16,9 +16,9 @@ class Customer extends AbstractEntity
     private $city;
     private $orders;
 
-    public function __construct($customerId, $name, $address, $city)
+    public function __construct($name, $address, $city)
     {
-        $this->customerId = $customerId;
+        $this->customerId = null;
         $this->name = $name;
         $this->address = $address;
         $this->city = $city;
