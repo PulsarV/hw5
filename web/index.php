@@ -1,16 +1,14 @@
 <?php
 
+use Layer\Connector\Connector;
+
 require __DIR__ . '/../config/autoload.php';
 
-use Layer\Collection\EntityCollection;
-use Layer\Collection\InitCollection;
-use Entity\Customer;
-use Entity\Order;
-use Entity\OrderItem;
-use Entity\Book;
-use Layer\Manager\Manager;
-
-//InitCollection::init($tables);
+if (!Connector::connect($config['host'], $config['port'], $config['db_name'], $config['db_user'], $config['db_password'])) {
+    echo 'DB Error';
+    die();
+}
+echo \Layer\Connector\DBInit::init($tables);
 
 $controller = new MainController();
 $controller->run();

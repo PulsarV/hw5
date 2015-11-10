@@ -14,7 +14,6 @@ class Customer extends AbstractEntity
     private $name;
     private $address;
     private $city;
-    private $orders;
 
     public function __construct($name, $address, $city)
     {
@@ -22,7 +21,6 @@ class Customer extends AbstractEntity
         $this->name = $name;
         $this->address = $address;
         $this->city = $city;
-        $this->orders = [];
     }
 
     /**
@@ -87,15 +85,5 @@ class Customer extends AbstractEntity
     public function setCity($city)
     {
         $this->city = $city;
-    }
-
-    public function addOrder($orderId)
-    {
-        $this->orders[] = $orderId;
-    }
-
-    public function getOrders()
-    {
-        return $this->orders;
     }
 }

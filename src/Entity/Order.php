@@ -13,15 +13,12 @@ class Order extends AbstractEntity
     private $orderId;
     private $customerId;
     private $amount;
-    private $orderItems;
-
 
     public function __construct($customerId)
     {
         $this->orderId = null;
         $this->customerId = $customerId;
         $this->amount = 0;
-        $this->orderItems = [];
     }
 
     /**
@@ -70,16 +67,5 @@ class Order extends AbstractEntity
     public function setAmount($amount)
     {
         $this->amount = $amount;
-    }
-
-    public function addOrderItem($isbn, $price)
-    {
-        $this->orderItems[] = $isbn;
-        $this->amount += $price;
-    }
-
-    public function getOrderItems()
-    {
-        return $this->orderItems;
     }
 }
